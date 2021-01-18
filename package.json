@@ -32,6 +32,7 @@
     "start": "react-scripts start",
     "build": "./scripts/build.sh",
     "build:bg": "webpack --mode production ./src/background.js --output ./build/background.js",
+    "build:cs": "webpack --mode production ./src/content-script.js --output ./build/content-script.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dist": "npm run build"
