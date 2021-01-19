@@ -16,7 +16,7 @@ build() {
     mv dist/index.html dist/popup.html
 
     echo 'Making zip file'
-    node scripts/zip.js
+    node build-scripts/zip.js
 
     echo 'Doing cleanup'
     rm -rf dist/*
