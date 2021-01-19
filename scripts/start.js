@@ -79,8 +79,10 @@ checkBrowsers(paths.appPath, isInteractive)
       // We have not found a port.
       return;
     }
-
-    const config = configFactory('development');
+    
+    const isExtension = process.env.EXTENSION_ENV === 'true';
+    
+    const config = configFactory('development', isExtension);
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
 
@@ -121,6 +123,7 @@ checkBrowsers(paths.appPath, isInteractive)
       proxyConfig,
       urls.lanUrlForConfig
     );
+    
     const devServer = new WebpackDevServer(compiler, serverConfig);
     // Launch WebpackDevServer.
     devServer.listen(port, HOST, err => {
