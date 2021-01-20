@@ -13,6 +13,7 @@ MooMask is a browser extension wallet for Binance SmartChain.  For safety, alway
 * View recent transactions.
 * Send & receive BNB, BEP-20 and Peggy Tokens.
 * Switch the network between Mainnet and Testnet.
+* Deploy _Smart Contracts_ from within the extension. 
 
 ## Manual Installation
 * Download _moomask.zip_ from the *zip* folder.

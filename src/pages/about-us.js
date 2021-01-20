@@ -47,7 +47,7 @@ export default function AboutUs() {
           <img src="images/moopay.png" alt="MooPay" />
         </div>
 
-        <Typography variant="caption" display="block" >v0.0.11</Typography>
+        <Typography variant="caption" display="block" >v0.0.12</Typography>
       </Container>
     </>
   )
