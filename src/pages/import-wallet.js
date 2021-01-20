@@ -70,7 +70,7 @@ export default function ImportWallet() {
     if(cWallet && cWallet.password) {
       history.push('/home');
     }
-  }, [cWallet]);
+  }, [cWallet]); //eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = (event) => {
     event.preventDefault();

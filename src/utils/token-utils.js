@@ -95,3 +95,29 @@ export const doTransfer = async ( network, token, privateKey, amount, destAddres
     return await transferToAddresss(network, token, privateKey, amount, destAddress)
   }
 }
+
+export const deployContract = async ( network, privateKey, abi, bytecode ) => {
+  const provider = getProvider(network)
+  const account = provider.eth.accounts.privateKeyToAccount(privateKey)
+  try {
+    provider.eth.accounts.wallet.add(account);
+    provider.eth.defaultAccount = account.address;
+    
+    let deploy_contract = new provider.eth.Contract(JSON.parse(abi));
+    
+    let payload = {
+      from: account.address,
+      gas: provider.utils.toHex(800000),
+      gasPrice: provider.utils.toHex(provider.utils.toWei('30', 'gwei')),
+      data: bytecode
+    }
+    
+    const info = await deploy_contract.deploy({data: bytecode}).send(payload);
+    
+    return info;
+  } catch(e) {
+    console.log('deployContract error');
+    console.error(e);
+    return {};
+  }
+}

@@ -12,6 +12,7 @@ import TransactionDetail from './pages/transaction-details';
 import WalletDetail from './pages/wallet-details';
 import ExportKey from './pages/export-key';
 import AddCustomToken from './pages/add-token';
+import DeployContract from './pages/deploy-contract';
 
 import { useRecoilState } from 'recoil';
 import { allTokens, currentWallet } from './store/atoms';
@@ -60,7 +61,7 @@ function App() {
     if(currentTokens.length === 0) {
       setCurrentTokens(ALL_TOKENS);
     }
-  }, [currentTokens]);
+  }, [currentTokens]); //eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <ThemeProvider theme={theme}>
@@ -87,6 +88,9 @@ function App() {
               </PrivateRoute>
               <PrivateRoute path="/home">
                 <Home />
+              </PrivateRoute>
+              <PrivateRoute path="/deploy-contract">
+                <DeployContract />
               </PrivateRoute>
               <Route path="/transaction/:hash" component={TransactionDetail}>
               </Route>

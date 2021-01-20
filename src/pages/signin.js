@@ -50,7 +50,7 @@ export default function Signin() {
     if(wallet && wallet.password) {
       history.push('/home');
     }
-  }, [wallet]);
+  }, [wallet]); //eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = (event) => {
     event.preventDefault();

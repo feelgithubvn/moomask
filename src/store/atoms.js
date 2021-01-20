@@ -62,6 +62,14 @@ export const allWallets = atom({
   }
 });
 
+export const allContracts = atom({
+  key: 'allContracts',
+  default: [],
+  persistence_UNSTABLE: {
+    types: 'allContracts'
+  }
+});
+
 export const currentWallet = selector({
   key: 'currentWallet',
   default: null,

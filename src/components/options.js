@@ -21,10 +21,12 @@ const KEY_EXPORT = 3;
 const KEY_SETTINGS = 4;
 const KEY_ABOUT_US = 5;
 const KEY_LOGOUT = 6;
+const KEY_DEPLOY_CONTRACT = 7;
 
 const options = [
   {id: KEY_SEND, name: 'Send'},
   {id: KEY_RECEIVE, name: 'Receive'},
+  {id: KEY_DEPLOY_CONTRACT, name: 'Deploy Contract'},
   {id: KEY_SETTINGS, name: 'Settings'},
   {id: KEY_LOGOUT, name: 'Logout'}
 ];
@@ -68,6 +70,9 @@ export default function Options({loggedIn}) {
         break;
       case KEY_EXPORT:
         history.push('/export-key');
+        break;
+      case KEY_DEPLOY_CONTRACT:
+        history.push('/deploy-contract');
         break;
       case KEY_ABOUT_US:
         history.push('/about-us')
