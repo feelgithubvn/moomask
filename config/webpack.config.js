@@ -131,7 +131,7 @@ module.exports = function (webpackEnv, isEnvExtension) {
             // which in turn let's users customize the target behavior as per their needs.
             postcssNormalize(),
           ],
-          sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+          sourceMap: isEnvProduction ? shouldUseSourceMap : (isEnvExtension ? false: isEnvDevelopment),
         },
       },
     ].filter(Boolean);
@@ -140,7 +140,7 @@ module.exports = function (webpackEnv, isEnvExtension) {
         {
           loader: require.resolve('resolve-url-loader'),
           options: {
-            sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
+            sourceMap: isEnvProduction ? shouldUseSourceMap : (isEnvExtension ? false: isEnvDevelopment),
             root: paths.appSrc,
           },
         },
@@ -163,11 +163,11 @@ module.exports = function (webpackEnv, isEnvExtension) {
       ? shouldUseSourceMap
         ? 'source-map'
         : false
-      : isEnvDevelopment && 'cheap-module-source-map',
+      : isEnvExtension ? false : (isEnvDevelopment && 'cheap-module-source-map'),
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry:
-      isEnvDevelopment && !shouldUseReactRefresh
+      isEnvDevelopment && !isEnvExtension && !shouldUseReactRefresh
         ? [
             // Include an alternative client for WebpackDevServer. A client's job is to
             // connect to WebpackDevServer by a socket and get notified about changes.
@@ -193,7 +193,7 @@ module.exports = function (webpackEnv, isEnvExtension) {
         : paths.appIndexJs,
     output: {
       // The build folder.
-      path: isEnvProduction ? paths.appBuild : undefined,
+      path: isEnvProduction || isEnvExtension ? paths.appBuild : undefined,
       // Add /* filename */ comments to generated require()s in the output.
       pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
@@ -418,7 +418,7 @@ module.exports = function (webpackEnv, isEnvExtension) {
                     },
                   ],
                   isEnvDevelopment &&
-                    shouldUseReactRefresh &&
+                    shouldUseReactRefresh && !isEnvExtension &&
                     require.resolve('react-refresh/babel'),
                 ].filter(Boolean),
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
@@ -584,7 +584,7 @@ module.exports = function (webpackEnv, isEnvExtension) {
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
       isEnvProduction &&
-        shouldInlineRuntimeChunk &&
+        shouldInlineRuntimeChunk || isEnvExtension &&
         new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
       isEnvExtension && new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
       // Makes some environment variables available in index.html.
