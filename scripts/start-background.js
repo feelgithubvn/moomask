@@ -17,13 +17,10 @@ require('../config/env');
 const fs = require('fs');
 const chalk = require('react-dev-utils/chalk');
 const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
-const clearConsole = require('react-dev-utils/clearConsole');
+
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const {
-  choosePort,
   createCompiler,
-  prepareProxy,
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
 
@@ -38,18 +35,27 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
     
 const isExtension = true;
 
-const config = configFactory('development', isExtension, paths.appBackgroundIndexJs);
-const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-const appName = 'moomask-bg';
+const toUseFile = process.env.EXTENSION_FILE;
 
+let appName = 'moomask';
+let entryFilePath;
+let outputFileName;
+
+if(toUseFile === 'background') {
+  appName = `${appName}-bg`;
+  entryFilePath = paths.appBackgroundIndexJs;
+  outputFileName = 'background.js'
+} else if(toUseFile === 'content-script') {
+  appName = `${appName}-cs`;
+  entryFilePath = paths.appContentScriptJs;
+  outputFileName = 'content-script.js'
+} else {
+  throw new Error("Specify file path please")
+}
+
+const config = configFactory('development', isExtension, entryFilePath, outputFileName);
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
-const urls = prepareUrls(
-  protocol,
-  '127.0.0.1',
-  3000,
-  paths.publicUrlOrPath.slice(0, -1)
-);
 
 const devSocket = {
   warnings: warnings =>
@@ -71,7 +77,6 @@ const compiler = createCompiler({
 });
 
 new webpack.NodeEnvironmentPlugin().apply(compiler);
-
 class LogPlugin {
   apply (compiler) {
       compiler.plugin('should-emit', compilation => {
@@ -86,11 +91,6 @@ class LogPlugin {
 } 
 
 new LogPlugin().apply(compiler);
-
-const callback = (err, stats) => {
-  console.log('Compiler has finished execution.');
-  process.stdout.write(stats.toString() + "\n");
-};
 
 const watching = compiler.watch({
   // Example [watchOptions](/configuration/watch/#watchoptions)

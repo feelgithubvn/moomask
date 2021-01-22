@@ -58,7 +58,7 @@ const hasJsxRuntime = (() => {
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function (webpackEnv, isEnvExtension, useEntryPath) {
+module.exports = function (webpackEnv, isEnvExtension, useEntryPath, useOutputName) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
 
@@ -93,8 +93,8 @@ module.exports = function (webpackEnv, isEnvExtension, useEntryPath) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
-        ? 'background.js'
-        : isEnvDevelopment && 'background.js',
+        ? useOutputName
+        : isEnvDevelopment && useOutputName,
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
