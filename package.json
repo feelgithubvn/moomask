@@ -87,10 +87,10 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "start:extension": "EXTENSION_ENV=true node scripts/start.js",
     "build": "./build-scripts/build.sh",
-    "build:bg": "webpack --mode production ./src/background.js --output ./build/background.js",
-    "build:cs": "webpack --mode production ./src/content-script.js --output ./build/content-script.js",
+    "build:bg": "EXTENSION_ENV=true node scripts/start-background.js",
+    "build:cs": "webpack --mode development ./src/content-script.js --output ./build/content-script.js",
+    "start:extension": "npm run build:bg && EXTENSION_ENV=true node scripts/start.js",
     "test": "node scripts/test.js",
     "dist": "npm run build"
   },

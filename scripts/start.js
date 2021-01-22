@@ -100,6 +100,7 @@ checkBrowsers(paths.appPath, isInteractive)
       errors: errors =>
         devServer.sockWrite(devServer.sockets, 'errors', errors),
     };
+
     // Create a webpack compiler that is configured with custom messages.
     const compiler = createCompiler({
       appName,
@@ -144,7 +145,12 @@ checkBrowsers(paths.appPath, isInteractive)
       }
 
       console.log(chalk.cyan('Starting the development server...\n'));
-      openBrowser(urls.localUrlForBrowser);
+      //openBrowser(urls.localUrlForBrowser);
+
+      //copy static resources directly 
+      if(isExtension) {
+        fs.copyFileSync(paths.extManifest, paths.appBuild + '/manifest.json')
+      }
     });
 
     ['SIGINT', 'SIGTERM'].forEach(function (sig) {

@@ -1,3 +1,4 @@
+/*global chrome*/
 
 chrome.runtime.onInstalled.addListener(() => {
   console.log('Moomask installed successfully');
@@ -17,7 +18,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if( request.message === "open_new_tab" ) {
-      
+      console.log("Opened new tab");
     }
   }
 );
