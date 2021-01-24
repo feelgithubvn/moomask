@@ -92,7 +92,7 @@ module.exports = function (webpackEnv, isEnvExtension, noHtmlRequired, useEntryP
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
-  const shouldUseReactRefresh = isEnvExtension ? false : env.raw.FAST_REFRESH;
+  const shouldUseReactRefresh = false;
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -132,7 +132,7 @@ module.exports = function (webpackEnv, isEnvExtension, noHtmlRequired, useEntryP
             // which in turn let's users customize the target behavior as per their needs.
             postcssNormalize(),
           ],
-          sourceMap: isEnvProduction ? shouldUseSourceMap : (isEnvExtension ? false: isEnvDevelopment),
+          sourceMap: isEnvProduction ? shouldUseSourceMap : false,
         },
       },
     ].filter(Boolean);
@@ -141,7 +141,7 @@ module.exports = function (webpackEnv, isEnvExtension, noHtmlRequired, useEntryP
         {
           loader: require.resolve('resolve-url-loader'),
           options: {
-            sourceMap: isEnvProduction ? shouldUseSourceMap : (isEnvExtension ? false: isEnvDevelopment),
+            sourceMap: isEnvProduction ? shouldUseSourceMap : false,
             root: paths.appSrc,
           },
         },
@@ -164,7 +164,7 @@ module.exports = function (webpackEnv, isEnvExtension, noHtmlRequired, useEntryP
       ? shouldUseSourceMap
         ? 'source-map'
         : false
-      : isEnvExtension ? false : (isEnvDevelopment && 'cheap-module-source-map'),
+      : false,
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry:
@@ -560,6 +560,7 @@ module.exports = function (webpackEnv, isEnvExtension, noHtmlRequired, useEntryP
         Object.assign(
           {},
           {
+            filename: 'popup.html',
             inject: true,
             template: paths.appHtml,
           },

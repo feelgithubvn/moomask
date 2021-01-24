@@ -40,7 +40,7 @@ export default function TokenList() {
     return (
       <ListItem style={style} key={index} className="trans-list">
         <ListItemAvatar>
-          {di.icon && <Avatar alt={di.title} src={`/tokens/${di.icon}`} />}
+          {di.icon && <Avatar alt={di.title} src={`/images/tokens/${di.icon}`} />}
         </ListItemAvatar>
         <ListItemText primary={`${precisionFormat(di.decimals)(di.balance)} ${di.code}`} secondary={di.title} />
       </ListItem>

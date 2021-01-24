@@ -68,6 +68,7 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
   extManifest: resolveApp('public/manifest.json'),
+  staticsToCopy: [{path: resolveApp('public/images'), to: '/images'}],
   publicUrlOrPath,
 };
 

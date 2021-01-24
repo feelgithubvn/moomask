@@ -86,11 +86,10 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "scripts": {
-    "start": "node scripts/start.js",
     "build": "./build-scripts/build.sh",
     "build:bg": "EXTENSION_FILE=background node scripts/start-background.js",
     "build:cs": "EXTENSION_FILE=content-script node scripts/start-background.js",
-    "start:extension": "npm run build:bg && EXTENSION_ENV=true node scripts/start.js",
+    "start": "EXTENSION_ENV=true node scripts/start.js",
     "test": "node scripts/test.js",
     "dist": "npm run build"
   },
